@@ -1,5 +1,4 @@
 import React from "react";
-import { connect } from "react-redux";
 import styled from "styled-components";
 import image1 from "../assets/image1.webp";
 
@@ -31,6 +30,7 @@ const Button = styled.div`
   padding: 10px;
   border-radius: 12px;
   cursor: pointer;
+  width: 100%;
 `;
 class Product extends React.Component {
   constructor(props) {
@@ -41,11 +41,14 @@ class Product extends React.Component {
     return (
       <MainContainer>
         <TitleContainer>Produit 1</TitleContainer>
-
         <img style={{ maxHeight: "200px" }} src={image1} alt="product-image" />
         <PriceContainer>Prix: 120 euros</PriceContainer>
-        <Button>Plus d'informations</Button>
-        <Button>Ajouter au panier</Button>
+        <a href="#mainproduct" style={{ textAlign: "center" }}>
+          <Button onCick={() => {}}>Plus d'informations</Button>
+        </a>
+        <a>
+          <Button>Ajouter au panier</Button>
+        </a>
       </MainContainer>
     );
   }

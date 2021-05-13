@@ -21,7 +21,9 @@ const ProductsContainer = styled.p`
   justify-content: center;
   flex-wrap: wrap;
 `;
-
+let product = {
+  id: "5",
+};
 class Products extends React.Component {
   constructor(props) {
     super(props);
@@ -34,13 +36,16 @@ class Products extends React.Component {
         <MainContainer>
           <SubTitle>Liste des produits :</SubTitle>
           <ProductsContainer>
-            <Product></Product>
-            <Product></Product>
-            <Product></Product>
-            <Product></Product>
-            <Product></Product>
-            <Product></Product>
+            <Product product={product} />
+            <Product product={product} />
+            <Product product={product} />
+            <Product product={product} />
+            <Product product={product} />
+            <Product product={product} />
+            <Product product={product} />
           </ProductsContainer>
+          <div id="mainproduct" style={{ marginBottom: "50px" }}></div>
+          <hr style={{ border: "grey solid 1px", width: "80%" }} />
           <MainProduct />
         </MainContainer>
       </div>
