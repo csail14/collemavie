@@ -5,6 +5,7 @@ import Home from "./containers/home";
 import Header from "./containers/header";
 import Footer from "./containers/footer";
 import Presentation from "./containers/presentation";
+import Products from "./containers/products";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/home" component={Home} />
         <Route exact path="/presentation" component={Presentation} />
+        <Route exact path="/products" component={Products} />
       </Switch>
       <Footer />
     </div>
