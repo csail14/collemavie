@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import image1 from "../assets/image1.webp";
+import Clem from "../assets/clem1.webp";
 
 const MainContainer = styled.div`
   display: flex;
@@ -32,6 +33,25 @@ const Paragraphe = styled.p`
   font-size: 22px;
   padding-left: 20%;
   padding-right: 20%;
+`;
+
+const ClemenceSection = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
+const TextClemenceContainer = styled.div`
+  font-weight: 700;
+  font-size: 28px;
+  margin: 30px;
+  paddding: 0px;
+  width: 400px;
+`;
+
+const ContactInfoContainer = styled.div`
+  text-align: left;
+  margin: 30px;
 `;
 
 class Home extends React.Component {
@@ -77,6 +97,49 @@ class Home extends React.Component {
             </ul>
           </Paragraphe>
           <Paragraphe>Bienvenue et si vous souhaitez échanger :</Paragraphe>
+          <ClemenceSection>
+            <img style={{ height: "300px" }} src={Clem} />
+
+            <TextClemenceContainer>
+              <p>Sourions, rions et collons la vie à notre image...</p>
+              <p>
+                Apparemment le rire est communicatif, je ne comprends pas
+                pourquoi. Et vous?
+              </p>
+            </TextClemenceContainer>
+          </ClemenceSection>
+          <ClemenceSection>
+            <ContactInfoContainer>
+              <h2>Me contacter</h2>
+              <p>42 IMPASSE DU BOEUF COURONNE, 78550 BAZAINVILLE</p>
+              <p>infoscollemavie@gmail.com</p>
+              <p>0660740723</p>
+              <p>Insta</p>
+            </ContactInfoContainer>
+            <form className="contactform">
+              <div className="contactdiv">
+                <input type="text" placeholder="Nom" onChange={(e) => {}} />
+                <input type="text" placeholder="Prénom" onChange={(e) => {}} />
+              </div>
+              <div className="contactdiv">
+                <input
+                  type="text"
+                  placeholder="Téléphone"
+                  onChange={(e) => {}}
+                />
+                <input type="text" placeholder="Adresse" onChange={(e) => {}} />
+              </div>
+              <textarea
+                className="contactTextarea"
+                type="text"
+                placeholder="Votre message"
+                onChange={(e) => {}}
+              />
+              <div>
+                <input type="submit" value="Envoyer" />
+              </div>
+            </form>
+          </ClemenceSection>
         </MainContainer>
       </div>
     );

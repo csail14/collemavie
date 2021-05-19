@@ -33,6 +33,19 @@ a {
 .App-link {
   color: #61dafb;
 }
+.contactdiv {
+  margin: 20px;
+}
+input {
+  padding: 10px;
+  margin: 5px;
+}
+
+.contactTextarea {
+  padding: 30px;
+  height: 100px;
+  width: 300px;
+}
 
 @keyframes App-logo-spin {
   from {
