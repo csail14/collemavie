@@ -85,7 +85,7 @@ class Home extends React.Component {
             Au-delà de la beauté du résultat, car oui, je suis toujours fière de
             mes œuvres, je me suis rendue compte que l'art et la créativité sont
             d'excellents moteurs de développement personnel:
-            <ul>
+            <ul style={{ textAlign: "left", marginLeft: "100px" }}>
               <li>Source d'évasion et d'entrainement doux pour le cerveau</li>
               <li>Permet de développer l'imagination et la créativité </li>
               <li>Boost l'égo et les pensées positives</li>
