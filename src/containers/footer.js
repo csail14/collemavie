@@ -1,6 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
+import styled from "styled-components";
+
+const LinkContainer = styled.div`
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  color: grey;
+  text-decoration: none;
+`;
 
 class Header extends React.Component {
   constructor(props) {
@@ -9,9 +18,14 @@ class Header extends React.Component {
 
   render() {
     return (
-      <header className="footer">
-        <nav></nav>
-      </header>
+      <footer className="footer">
+        <LinkContainer>
+          {" "}
+          <Link classname="header-link" to="/admin">
+            Admin
+          </Link>
+        </LinkContainer>
+      </footer>
     );
   }
 }

@@ -6,7 +6,6 @@ const initialState = {
 };
 
 const UserReducer = (state = initialState, action) => {
-  console.log("action dans reducer", action);
   switch (action.type) {
     case LOAD_USER_INFO:
       return { isLogged: true, infos: action.payload };

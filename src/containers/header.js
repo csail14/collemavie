@@ -44,10 +44,6 @@ class Header extends React.Component {
             <Link classname="header-link" to="/products">
               Mes Oeuvres, ma vie
             </Link>
-
-            {this.props.user.isLogged && (
-              <Link to="/Logout">Se deconnecter</Link>
-            )}
           </LinkContainer>
         </nav>
       </MainContainer>

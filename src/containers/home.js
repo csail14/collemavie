@@ -3,6 +3,9 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import image1 from "../assets/image1.webp";
 import Clem from "../assets/clem1.webp";
+import { getTextById } from "../api/textApi";
+import TextEditor from "../components/textEditor";
+import DOMPurify from "dompurify";
 
 const MainContainer = styled.div`
   display: flex;
@@ -18,18 +21,19 @@ const ImageContainer = styled.div`
   background-image: url(${image1});
 `;
 
-const Title = styled.p`
+const Title = styled.div`
   font-size: 62px;
   font-weight: 700;
   padding-left: 20%;
   padding-right: 20%;
+  padding-top: 20px;
 `;
-const SubTitle = styled.p`
+const SubTitle = styled.div`
   font-size: 32px;
   padding-left: 20%;
   padding-right: 20%;
 `;
-const Paragraphe = styled.p`
+const Paragraphe = styled.div`
   font-size: 22px;
   padding-left: 20%;
   padding-right: 20%;
@@ -39,6 +43,16 @@ const ClemenceSection = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const EditButton = styled.div`
+  padding: 20px;
+  background-color: grey;
+  color: white;
+  width: fit-content;
+  margin: auto;
+  border-radius: 12px;
+  cursor: pointer;
 `;
 
 const TextClemenceContainer = styled.div`
@@ -54,49 +68,86 @@ const ContactInfoContainer = styled.div`
   margin: 30px;
 `;
 
+const createMarkup = (html) => {
+  return {
+    __html: DOMPurify.sanitize(html),
+  };
+};
+
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      subtitle: "",
+      paragraphe: "",
+      isEditingTitleMode: false,
+      isEditingParagrapheMode: false,
+    };
   }
+  componentDidMount() {
+    getTextById(15).then((res) => {
+      this.setState({ subtitle: res.text.text });
+    });
+    getTextById(35).then((res) => {
+      this.setState({ paragraphe: res.text.text });
+    });
+  }
+
+  handleToggleEditTitleMode = () => {
+    this.setState({ isEditingTitleMode: !this.state.isEditingTitleMode });
+  };
+
+  handleToggleEditParagrapheMode = () => {
+    this.setState({
+      isEditingParagrapheMode: !this.state.isEditingParagrapheMode,
+    });
+  };
 
   render() {
     return (
       <div className="main">
-        {/* <p className="title">Bienvenue sur le site de l'application 4b</p> */}
         <MainContainer>
           <ImageContainer></ImageContainer>
           <Title>Collemavie🎨</Title>
-          <SubTitle>
-            Une artiste indépendante, solaire, aventurière qui aime le
-            street-art et s'en inspire !
-          </SubTitle>
-          <Paragraphe>
-            Collemavie🎨 est un né suite à plusieurs après-midi et soirées de
-            joie, de relaxation en musique, de calme et silence, mais aussi en
-            collaboration avec quelques set Techno endiablés (fan de musique
-            électronique que je suis) afin de me retrouver et de me faire
-            plaisir.{" "}
-          </Paragraphe>
-          <Paragraphe>
-            Le collage sur toile me procure une telle évasion que j'ai décidé de
-            vous en faire profiter.
-          </Paragraphe>
-          <Paragraphe>
-            Au-delà de la beauté du résultat, car oui, je suis toujours fière de
-            mes œuvres, je me suis rendue compte que l'art et la créativité sont
-            d'excellents moteurs de développement personnel:
-            <ul style={{ textAlign: "left", marginLeft: "100px" }}>
-              <li>Source d'évasion et d'entrainement doux pour le cerveau</li>
-              <li>Permet de développer l'imagination et la créativité </li>
-              <li>Boost l'égo et les pensées positives</li>
-              <li>Permet de se recentrer sur ses valeurs</li>
-              <li>
-                Repose uniquement sur de bonnes intentions, pour soi et autrui{" "}
-              </li>
-              <li>Se pratique seul ou à plusieurs</li>
-            </ul>
-          </Paragraphe>
-          <Paragraphe>Bienvenue et si vous souhaitez échanger :</Paragraphe>
+          {this.state.isEditingTitleMode ? (
+            <TextEditor
+              id={15}
+              toggle={this.handleToggleEditTitleMode}
+              text={this.state.subtitle}
+            />
+          ) : (
+            <SubTitle>
+              <div
+                className="preview"
+                dangerouslySetInnerHTML={createMarkup(this.state.subtitle)}
+              ></div>
+            </SubTitle>
+          )}
+          {!this.state.isEditingTitleMode && this.props.user.isLogged && (
+            <EditButton onClick={this.handleToggleEditTitleMode}>
+              Modifier le titre
+            </EditButton>
+          )}
+
+          {this.state.isEditingParagrapheMode ? (
+            <TextEditor
+              id={35}
+              toggle={this.handleToggleEditParagrapheMode}
+              text={this.state.paragraphe}
+            />
+          ) : (
+            <Paragraphe>
+              <div
+                className="preview"
+                dangerouslySetInnerHTML={createMarkup(this.state.paragraphe)}
+              ></div>
+            </Paragraphe>
+          )}
+          {!this.state.isEditingParagrapheMode && this.props.user.isLogged && (
+            <EditButton onClick={this.handleToggleEditParagrapheMode}>
+              Modifier le text
+            </EditButton>
+          )}
           <ClemenceSection>
             <img style={{ height: "300px" }} src={Clem} />
 
