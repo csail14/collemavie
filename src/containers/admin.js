@@ -3,6 +3,10 @@ import { Link } from "react-router-dom";
 import { loadProductInfo } from "../actions/product/productActions";
 import { connect } from "react-redux";
 import styled from "styled-components";
+import PhotosUploader from "../components/uploadVideo";
+import { addMedia } from "../api/mediaApi";
+import { setAllProduct } from "../helpers/function";
+
 import {
   addProduct,
   deleteProductById,
@@ -52,9 +56,10 @@ class Admin extends React.Component {
     this.description = "";
     this.price = "";
     this.titreCat = "";
+    this.cat_id = 5;
+    this.mediaURL = [];
   }
-  componentDidMount = () => {};
-  componentDidUpdate = () => {};
+
   onSubmitForm = (e) => {
     e.preventDefault();
     let data = {
@@ -62,7 +67,7 @@ class Admin extends React.Component {
       description: this.description,
       price: this.price,
       state: "available",
-      cat_id: "",
+      cat_id: this.cat_id,
     };
     if (this.title !== "" && (this.description !== "") & (this.price !== "")) {
       addProduct(data).then((res) => {
@@ -73,8 +78,16 @@ class Admin extends React.Component {
         } else {
           this.setState({ addError: "Produit ajouté avec succes" });
           getProductAll().then((resp) => {
-            this.props.loadProductInfo(resp.products);
+            const newProdut = setAllProduct(resp);
+            this.props.loadProductInfo(newProdut);
           });
+          for (let i = 0; i < this.mediaURL.length; i++) {
+            let dataMedia = {
+              url: this.mediaURL[0],
+              product_id: res.result.insertId,
+            };
+            addMedia(dataMedia).then((resMedia) => {});
+          }
         }
       });
     }
@@ -93,7 +106,7 @@ class Admin extends React.Component {
         } else {
           this.setState({ addError: "Produit ajouté avec succes" });
           getCatAll().then((resp) => {
-            this.props.loadCatInfo(resp.products);
+            this.props.loadCatInfo(resp.cat);
           });
         }
       });
@@ -103,12 +116,23 @@ class Admin extends React.Component {
   onChangeText(type, text) {
     this[type] = text;
   }
+  onChangeCat(value) {
+    this.cat_id = value;
+  }
+
+  setMediaUrl = (url) => {
+    this.mediaURL.push(url);
+  };
+  deleteMediaUrl = (url) => {
+    this.mediaURL = [];
+  };
 
   deleteProduct(id) {
     deleteProductById(id).then((res) => {
       if (res.status === 200) {
         getProductAll().then((resp) => {
-          this.props.loadProductInfo(resp.products);
+          const newProdut = setAllProduct(resp);
+          this.props.loadProductInfo(newProdut);
         });
       }
     });
@@ -145,6 +169,18 @@ class Admin extends React.Component {
               this.onChangeText("description", e.currentTarget.value);
             }}
           />
+          <div style={{ display: "flex", margin: "10px" }}>
+            Catégorie :
+            <select
+              onChange={(e) => {
+                this.onChangeCat(e.currentTarget.value);
+              }}
+            >
+              {this.props.category.list.map((item) => {
+                return <option value={item.id}>{item.name}</option>;
+              })}
+            </select>
+          </div>
           <input
             type="text"
             placeholder="prix €"
@@ -152,6 +188,12 @@ class Admin extends React.Component {
               this.onChangeText("price", e.currentTarget.value);
             }}
           />{" "}
+          <PhotosUploader
+            name={this.state.name}
+            changeVideoID={this.changeVideoID}
+            setMediaUrl={this.setMediaUrl}
+            deleteMediaUrl={this.deleteMediaUrl}
+          />
           <input type="submit" value="Enregistrer" name="Enregistrer" />
         </form>
         <Title>Supprimer un produit</Title>{" "}
@@ -182,19 +224,24 @@ class Admin extends React.Component {
             alignItems: "center",
           }}
           onSubmit={(e) => {
-            this.onSubmitCatForm(e);
+            this.onSubmitcatForm(e);
           }}
         >
           <input
             type="text"
             placeholder="Titre"
             onChange={(e) => {
-              this.onChangeText("titleCat", e.currentTarget.value);
+              this.onChangeText("titreCat", e.currentTarget.value);
             }}
           />
 
           <input type="submit" value="Enregistrer" name="Enregistrer" />
         </form>
+        <ProductContainer>
+          {this.props.category.list.map((item) => {
+            return <Product>{item.name}</Product>;
+          })}
+        </ProductContainer>
       </MainContainer>
     );
   }
@@ -208,6 +255,7 @@ const mapStateToProps = (store) => {
   return {
     user: store.user,
     products: store.products,
+    category: store.category,
   };
 };
 

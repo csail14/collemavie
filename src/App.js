@@ -9,6 +9,7 @@ import Products from "./containers/products";
 import RequireAuth from "./helpers/require-auth";
 import Admin from "./containers/admin";
 import Login from "./containers/login";
+import MainProduct from "./components/mainProduct";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           component={RequireAuth(Presentation)}
         />
         <Route exact path="/products" component={RequireAuth(Products)} />
+        <Route exact path="/product/:id" component={RequireAuth(MainProduct)} />
         <Route exact path="/login" component={Login} />
 
         <Route exact path="/admin" component={RequireAuth(Admin, true)} />

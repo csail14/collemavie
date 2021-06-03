@@ -1,7 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import image1 from "../assets/image1.webp";
+import { getTextById } from "../api/textApi";
+import DOMPurify from "dompurify";
+import TextEditor from "../components/textEditor";
 
 const MainContainer = styled.div`
   display: flex;
@@ -26,48 +28,93 @@ const Paragraphe = styled.p`
   padding-left: 20%;
   padding-right: 20%;
 `;
-
+const EditButton = styled.div`
+  padding: 20px;
+  background-color: grey;
+  color: white;
+  width: fit-content;
+  margin: auto;
+  border-radius: 12px;
+  cursor: pointer;
+`;
+const createMarkup = (html) => {
+  return {
+    __html: DOMPurify.sanitize(html),
+  };
+};
 class Home extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      subtitle: "",
+      paragraphe: "",
+      isEditingTitleMode: false,
+      isEditingParagrapheMode: false,
+    };
   }
+
+  componentDidMount() {
+    getTextById(25).then((res) => {
+      this.setState({ subtitle: res.text.text });
+    });
+    getTextById(45).then((res) => {
+      this.setState({ paragraphe: res.text.text });
+    });
+  }
+
+  handleToggleEditTitleMode = () => {
+    this.setState({ isEditingTitleMode: !this.state.isEditingTitleMode });
+  };
+
+  handleToggleEditParagrapheMode = () => {
+    this.setState({
+      isEditingParagrapheMode: !this.state.isEditingParagrapheMode,
+    });
+  };
 
   render() {
     return (
       <div className="main">
         {/* <p className="title">Bienvenue sur le site de l'application 4b</p> */}
         <MainContainer>
-          <SubTitle>Bienvenue dans l'envers du décor</SubTitle>
-          <Paragraphe>
-            Pour ceux, qui ne me connaissent pas bien encore, je m'appelle
-            Clémence, j'ai 26 ans et je m'apprête à vous raconter aussi
-            brièvement que possible la genèse de @collemavie et mon histoire.
-          </Paragraphe>
-          <Paragraphe>
-            J'ai grandi dans un petit village des Yvelines entourée par mes
-            parents et ma soeur jumelle. Et oui, nous sommes arrivées à deux
-            pour embellir ce monde à 5 minutes d'intervalle. Evidemment, Amélie
-            est arrivée la première, conquérante, déterminée, mais surtout la
-            plus attentionnée que je connaisse.
-          </Paragraphe>
-          <Paragraphe>
-            Niveau études, rien de très créatif je dirais, après un IUT, j'ai
-            passé trois années à étudier afin d'obtenir un Master en Business
-            avec une belle touche internationale (passionnée par l'anglais que
-            je suis)... C'est à la fin de ce cursus, que beaucoup de choses ont
-            commencé à bouger en moi, une envie d'aller découvrir le monde et
-            surtout de sortir de ce cocon que je connaissais depuis tant
-            d'années.
-          </Paragraphe>
-          <Paragraphe>
-            Et hop, me voilà émigrée à l'autre de bout de la terre en Australie.{" "}
-          </Paragraphe>
-          <Paragraphe>
-            J'y ai passé deux années incroyables, remplies d'expériences
-            humaines, de challenges, de remises en question et surtout de prise
-            de recul sur bons nombres de croyances que j'avais lié à
-            l'environnement dans lequel je me trouvais depuis toujours.{" "}
-          </Paragraphe>
+          {this.state.isEditingTitleMode ? (
+            <TextEditor
+              id={25}
+              toggle={this.handleToggleEditTitleMode}
+              text={this.state.subtitle}
+            />
+          ) : (
+            <SubTitle>
+              <div
+                className="preview"
+                dangerouslySetInnerHTML={createMarkup(this.state.subtitle)}
+              ></div>
+            </SubTitle>
+          )}
+          {!this.state.isEditingTitleMode && this.props.user.isLogged && (
+            <EditButton onClick={this.handleToggleEditTitleMode}>
+              Modifier le titre
+            </EditButton>
+          )}
+          {this.state.isEditingParagrapheMode ? (
+            <TextEditor
+              id={45}
+              toggle={this.handleToggleEditParagrapheMode}
+              text={this.state.paragraphe}
+            />
+          ) : (
+            <Paragraphe>
+              <div
+                className="preview"
+                dangerouslySetInnerHTML={createMarkup(this.state.paragraphe)}
+              ></div>
+            </Paragraphe>
+          )}
+          {!this.state.isEditingParagrapheMode && this.props.user.isLogged && (
+            <EditButton onClick={this.handleToggleEditParagrapheMode}>
+              Modifier le text
+            </EditButton>
+          )}
         </MainContainer>
       </div>
     );

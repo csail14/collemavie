@@ -4,12 +4,13 @@ import { Redirect } from "react-router-dom";
 import { config } from "../config";
 import axios from "axios";
 import { connect } from "react-redux";
-
+import { setAllProduct } from "./function";
 import { loadUserInfo } from "../actions/user/userActions";
 import { loadProductInfo } from "../actions/product/productActions";
 import { loadCatInfo } from "../actions/category/catActions";
 import { getProductAll } from "../api/productApi";
 import { getCatAll } from "../api/catApi";
+
 export default function (ChildComponent, withAuth = false) {
   class RequireAuth extends React.Component {
     constructor(props) {
@@ -44,7 +45,8 @@ export default function (ChildComponent, withAuth = false) {
       if (this.props.products.list.length == 0) {
         getProductAll().then((res) => {
           if (res.status === 200) {
-            this.props.loadProductInfo(res.products);
+            const newProduct = setAllProduct(res);
+            this.props.loadProductInfo(newProduct);
           }
         });
       }
@@ -58,7 +60,6 @@ export default function (ChildComponent, withAuth = false) {
     };
 
     render() {
-      console.log(this.props);
       if (this.state.redirect) {
         return <Redirect to="/login" />;
       }

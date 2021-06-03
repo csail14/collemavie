@@ -6,6 +6,7 @@ import Clem from "../assets/clem1.webp";
 import { getTextById } from "../api/textApi";
 import TextEditor from "../components/textEditor";
 import DOMPurify from "dompurify";
+import ProductBanner from "../components/productBanner";
 
 const MainContainer = styled.div`
   display: flex;
@@ -42,7 +43,8 @@ const Paragraphe = styled.div`
 const ClemenceSection = styled.div`
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  margin-top: 30px;
 `;
 
 const EditButton = styled.div`
@@ -80,6 +82,8 @@ class Home extends React.Component {
     this.state = {
       subtitle: "",
       paragraphe: "",
+      contactInfo: "",
+      isEditingContactMode: false,
       isEditingTitleMode: false,
       isEditingParagrapheMode: false,
     };
@@ -91,6 +95,9 @@ class Home extends React.Component {
     getTextById(35).then((res) => {
       this.setState({ paragraphe: res.text.text });
     });
+    getTextById(5).then((res) => {
+      this.setState({ contactInfo: res.text.text });
+    });
   }
 
   handleToggleEditTitleMode = () => {
@@ -100,6 +107,11 @@ class Home extends React.Component {
   handleToggleEditParagrapheMode = () => {
     this.setState({
       isEditingParagrapheMode: !this.state.isEditingParagrapheMode,
+    });
+  };
+  handleToggleEditContactMode = () => {
+    this.setState({
+      isEditingContactMode: !this.state.isEditingContactMode,
     });
   };
 
@@ -148,6 +160,7 @@ class Home extends React.Component {
               Modifier le text
             </EditButton>
           )}
+          <ProductBanner products={this.props.products} />
           <ClemenceSection>
             <img style={{ height: "300px" }} src={Clem} />
 
@@ -162,10 +175,27 @@ class Home extends React.Component {
           <ClemenceSection>
             <ContactInfoContainer>
               <h2>Me contacter</h2>
-              <p>42 IMPASSE DU BOEUF COURONNE, 78550 BAZAINVILLE</p>
-              <p>infoscollemavie@gmail.com</p>
-              <p>0660740723</p>
-              <p>Insta</p>
+              {this.state.isEditingContactMode ? (
+                <TextEditor
+                  id={5}
+                  toggle={this.handleToggleEditContactMode}
+                  text={this.state.contactInfo}
+                />
+              ) : (
+                <ContactInfoContainer>
+                  <div
+                    className="preview"
+                    dangerouslySetInnerHTML={createMarkup(
+                      this.state.contactInfo
+                    )}
+                  ></div>
+                </ContactInfoContainer>
+              )}
+              {!this.state.isEditingContactMode && this.props.user.isLogged && (
+                <EditButton onClick={this.handleToggleEditContactMode}>
+                  Modifier les infos
+                </EditButton>
+              )}
             </ContactInfoContainer>
             <form className="contactform">
               <div className="contactdiv">
@@ -202,6 +232,7 @@ const mapDispatchToProps = {};
 const mapStateToProps = (store) => {
   return {
     user: store.user,
+    products: store.products,
   };
 };
 

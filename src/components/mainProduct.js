@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import image1 from "../assets/image1.webp";
+import ProductBanner from "./productBanner";
 
 const MainContainer = styled.div`
   display: flex;
@@ -12,6 +13,7 @@ const MainContainer = styled.div`
 `;
 
 const TitleContainer = styled.div`
+  margin-top: 80px;
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 20px;
@@ -41,31 +43,47 @@ const Button = styled.div`
   max-width: 500px;
   margin: auto;
 `;
-class MainProduct extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
-  render() {
-    return (
-      <MainContainer>
-        <TitleContainer>Produit 1</TitleContainer>
+const MainProduct = (props) => {
+  const [product, setProduct] = useState(null);
 
-        <img
-          style={{ maxHeight: "60%", maxWidth: "60%", margin: "auto" }}
-          src={image1}
-          alt="product-image"
-        />
-        <DescriptionContainer>
-          blablablbalbalbalablalala ablbalbalb blablablbalbalbalablalala
-          vlvlajkehflkehfkln rlzkehf iefhka{" "}
-        </DescriptionContainer>
-        <PriceContainer>Prix: 120 euros</PriceContainer>
+  useEffect(() => {
+    let index = props.match.params.id;
 
-        <Button>Ajouter au panier</Button>
-      </MainContainer>
-    );
-  }
-}
+    console.log("allproduct", props.products.list);
+    let product = props.products.list.filter((item) => item.id == index)[0];
+    setProduct(product);
+  }, [props.products, props.match.params.id]);
 
-export default MainProduct;
+  return (
+    <MainContainer>
+      {product && (
+        <>
+          <TitleContainer>{product.title}</TitleContainer>
+
+          <img
+            style={{ maxHeight: "40%", maxWidth: "40%", margin: "auto" }}
+            src={image1}
+            alt="product-image"
+          />
+          <DescriptionContainer>{product.description}</DescriptionContainer>
+          <PriceContainer>Prix: {product.price} euros</PriceContainer>
+
+          <Button>Ajouter au panier</Button>
+          <ProductBanner products={props.products} />
+        </>
+      )}
+    </MainContainer>
+  );
+};
+
+const mapDispatchToProps = {};
+
+const mapStateToProps = (store) => {
+  return {
+    user: store.user,
+    products: store.products,
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainProduct);

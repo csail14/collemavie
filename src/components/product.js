@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
-import image1 from "../assets/image1.webp";
+import { config } from "../config";
+import { Link } from "react-router-dom";
 
 const MainContainer = styled.div`
   display: flex;
@@ -40,15 +41,36 @@ class Product extends React.Component {
   render() {
     return (
       <MainContainer>
-        <TitleContainer>Produit 1</TitleContainer>
-        <img style={{ maxHeight: "200px" }} src={image1} alt="product-image" />
-        <PriceContainer>Prix: 120 euros</PriceContainer>
-        <a href="#mainproduct" style={{ textAlign: "center" }}>
-          <Button onCick={() => {}}>Plus d'informations</Button>
-        </a>
-        <a>
-          <Button>Ajouter au panier</Button>
-        </a>
+        {this.props.product.media && (
+          <>
+            <TitleContainer>{this.props.product.title}</TitleContainer>
+            <img
+              style={{ maxHeight: "200px" }}
+              src={
+                this.props.product.media.length > 0
+                  ? config.video_url + this.props.product.media[0]
+                  : null
+              }
+              alt="product-image"
+            />
+            <PriceContainer>
+              Prix: {this.props.product.price} euros
+            </PriceContainer>
+            <a href="#mainproduct" style={{ textAlign: "center" }}>
+              <Button onCick={() => {}}>
+                <Link
+                  style={{ color: "white", marginRight: "0" }}
+                  to={"/product/" + this.props.product.id}
+                >
+                  Plus d'informations
+                </Link>
+              </Button>
+            </a>
+            <a>
+              <Button>Ajouter au panier</Button>
+            </a>
+          </>
+        )}
       </MainContainer>
     );
   }
