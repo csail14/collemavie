@@ -32,16 +32,20 @@ class Header extends React.Component {
   render() {
     return (
       <MainContainer>
-        <TitleContainer>Collemavie🎨 </TitleContainer>
+        <TitleContainer>
+          <Link className="header-link" to="/home">
+            Collemavie🎨
+          </Link>
+        </TitleContainer>
         <nav>
           <LinkContainer>
-            <Link classname="header-link" to="/home">
+            <Link className="header-link" to="/home">
               Bienvenue
             </Link>
-            <Link classname="header-link" to="/presentation">
+            <Link className="header-link" to="/presentation">
               Enchantée, moi c'est Clémence
             </Link>
-            <Link classname="header-link" to="/products">
+            <Link className="header-link" to="/products">
               Mes Oeuvres, ma vie
             </Link>
           </LinkContainer>

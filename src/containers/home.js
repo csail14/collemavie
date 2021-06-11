@@ -42,6 +42,14 @@ const Paragraphe = styled.div`
 
 const ClemenceSection = styled.div`
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  margin-left: 50px;
+  margin-right: 100px;
+`;
+const ContactSection = styled.div`
+  display: flex;
   justify-content: center;
   align-items: flex-start;
   margin-top: 30px;
@@ -160,9 +168,9 @@ class Home extends React.Component {
               Modifier le text
             </EditButton>
           )}
-          <ProductBanner products={this.props.products} />
+          <ProductBanner />
           <ClemenceSection>
-            <img style={{ height: "300px" }} src={Clem} />
+            <img style={{ height: "500px" }} src={Clem} />
 
             <TextClemenceContainer>
               <p>Sourions, rions et collons la vie à notre image...</p>
@@ -172,7 +180,7 @@ class Home extends React.Component {
               </p>
             </TextClemenceContainer>
           </ClemenceSection>
-          <ClemenceSection>
+          <ContactSection>
             <ContactInfoContainer>
               <h2>Me contacter</h2>
               {this.state.isEditingContactMode ? (
@@ -220,7 +228,7 @@ class Home extends React.Component {
                 <input type="submit" value="Envoyer" />
               </div>
             </form>
-          </ClemenceSection>
+          </ContactSection>
         </MainContainer>
       </div>
     );

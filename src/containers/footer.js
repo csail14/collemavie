@@ -21,7 +21,7 @@ class Header extends React.Component {
       <footer className="footer">
         <LinkContainer>
           {" "}
-          <Link classname="header-link" to="/admin">
+          <Link className="header-link" to="/admin">
             Admin
           </Link>
         </LinkContainer>

@@ -23,8 +23,10 @@ export default function (ChildComponent, withAuth = false) {
 
     componentDidMount = async () => {
       const token = window.localStorage.getItem("collemavie");
-      if (token === null && withAuth) {
-        this.setState({ redirect: true });
+      if (token === null) {
+        if (withAuth) {
+          this.setState({ redirect: true });
+        }
       } else {
         if (this.props.user.isLogged === false) {
           axios
@@ -46,6 +48,7 @@ export default function (ChildComponent, withAuth = false) {
         getProductAll().then((res) => {
           if (res.status === 200) {
             const newProduct = setAllProduct(res);
+            console.log(newProduct);
             this.props.loadProductInfo(newProduct);
           }
         });

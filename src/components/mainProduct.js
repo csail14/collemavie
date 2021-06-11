@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import image1 from "../assets/image1.webp";
 import ProductBanner from "./productBanner";
+import { config } from "../config";
 
 const MainContainer = styled.div`
   display: flex;
@@ -14,7 +15,7 @@ const MainContainer = styled.div`
 
 const TitleContainer = styled.div`
   margin-top: 80px;
-  font-size: 22px;
+  font-size: 40px;
   font-weight: 700;
   margin-bottom: 20px;
 `;
@@ -32,16 +33,31 @@ const DescriptionContainer = styled.div`
   margin-bottom: 10px;
   font-size: 14px;
   justify-content: center;
+  font-size: 20px;
+  margin-left: 200px;
+  margin-right: 200px;
+`;
+
+const InfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
 `;
 const Button = styled.div`
-  margin-top: 10px;
   background-color: grey;
   color: white;
   padding: 10px;
   border-radius: 12px;
   cursor: pointer;
   max-width: 500px;
-  margin: auto;
+  margin: 10px auto;
+`;
+
+const ProductContainer = styled.div`
+  display: flex;
+  alignitems: center;
+  margin: 20px;
 `;
 
 const MainProduct = (props) => {
@@ -49,28 +65,30 @@ const MainProduct = (props) => {
 
   useEffect(() => {
     let index = props.match.params.id;
-
-    console.log("allproduct", props.products.list);
     let product = props.products.list.filter((item) => item.id == index)[0];
     setProduct(product);
   }, [props.products, props.match.params.id]);
-
   return (
     <MainContainer>
       {product && (
         <>
-          <TitleContainer>{product.title}</TitleContainer>
+          <ProductContainer>
+            {product.media && (
+              <img
+                style={{ maxHeight: "40%", maxWidth: "40%", margin: "auto" }}
+                src={config.video_url + product.media[0]}
+                alt="product-image"
+              />
+            )}
+            <InfoContainer>
+              <TitleContainer>{product.title}</TitleContainer>
+              <DescriptionContainer>{product.description}</DescriptionContainer>
+              <PriceContainer>Prix: {product.price} euros</PriceContainer>
 
-          <img
-            style={{ maxHeight: "40%", maxWidth: "40%", margin: "auto" }}
-            src={image1}
-            alt="product-image"
-          />
-          <DescriptionContainer>{product.description}</DescriptionContainer>
-          <PriceContainer>Prix: {product.price} euros</PriceContainer>
-
-          <Button>Ajouter au panier</Button>
-          <ProductBanner products={props.products} />
+              <Button>Ajouter au panier</Button>
+            </InfoContainer>
+          </ProductContainer>
+          <ProductBanner />
         </>
       )}
     </MainContainer>

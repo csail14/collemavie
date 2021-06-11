@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { config } from "../config";
 import { Link } from "react-router-dom";
@@ -33,47 +33,48 @@ const Button = styled.div`
   cursor: pointer;
   width: 100%;
 `;
-class Product extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
-  render() {
-    return (
-      <MainContainer>
-        {this.props.product.media && (
-          <>
-            <TitleContainer>{this.props.product.title}</TitleContainer>
-            <img
-              style={{ maxHeight: "200px" }}
-              src={
-                this.props.product.media.length > 0
-                  ? config.video_url + this.props.product.media[0]
-                  : null
-              }
-              alt="product-image"
-            />
-            <PriceContainer>
-              Prix: {this.props.product.price} euros
-            </PriceContainer>
-            <a href="#mainproduct" style={{ textAlign: "center" }}>
-              <Button onCick={() => {}}>
-                <Link
-                  style={{ color: "white", marginRight: "0" }}
-                  to={"/product/" + this.props.product.id}
-                >
-                  Plus d'informations
-                </Link>
-              </Button>
-            </a>
-            <a>
-              <Button>Ajouter au panier</Button>
-            </a>
-          </>
+const Product = (props) => {
+  const [product, setProduct] = useState([]);
+
+  useEffect(() => {
+    if (props.products) {
+      setProduct(props.products.list);
+    }
+  }, [props.products]);
+  console.log(props.product);
+  return (
+    <MainContainer>
+      <>
+        <TitleContainer>{props.product.title}</TitleContainer>
+        {props.product.media && (
+          <img
+            style={{ maxHeight: "200px" }}
+            src={
+              props.product.media.length > 0
+                ? config.video_url + props.product.media[0]
+                : null
+            }
+            alt="product-image"
+          />
         )}
-      </MainContainer>
-    );
-  }
-}
+        <PriceContainer>Prix: {props.product.price} euros</PriceContainer>
+        <a href="#mainproduct" style={{ textAlign: "center" }}>
+          <Button onCick={() => {}}>
+            <Link
+              style={{ color: "white", marginRight: "0" }}
+              to={"/product/" + props.product.id}
+            >
+              Plus d'informations
+            </Link>
+          </Button>
+        </a>
+        <a>
+          <Button>Ajouter au panier</Button>
+        </a>
+      </>
+    </MainContainer>
+  );
+};
 
 export default Product;

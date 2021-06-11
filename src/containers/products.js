@@ -2,13 +2,13 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import Product from "../components/product";
-import MainProduct from "../components/mainProduct";
 
 const MainProductContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-top: 60px;
+  width: -webkit-fill-available;
 `;
 const MainContainer = styled.div`
   display: flex;
@@ -34,29 +34,29 @@ const Banner = styled.div`
   flex-direction: column;
   font-size: 32px;
   background-color: #80808036;
-
-  width: 20%;
+  border-radius: 12px;
+  margin-top: 90px;
+  width: 250px;
 `;
 const ProductsContainer = styled.p`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
 `;
-let product = {
-  id: "5",
-};
 
-export default function Products(props) {
+const Products = (props) => {
   const [filter, setFilter] = useState(0);
+  const [filterName, setFilterName] = useState("");
   const [productList, setProductList] = useState([]);
 
   useEffect(() => {
     if (filter == 0 && productList.length == 0) {
       setProductList(props.products.list);
     }
-  }, [props.products]);
+  });
 
   const filterResult = (newFilter) => {
+    console.log(newFilter);
     setFilter(newFilter);
     if (newFilter !== 0) {
       let productSelected = props.products.list.filter(
@@ -64,8 +64,13 @@ export default function Products(props) {
       );
 
       setProductList(productSelected);
+      let filterName = props.category.list.filter(
+        (item) => item.id === newFilter
+      )[0].name;
+      setFilterName(filterName);
     } else {
       setProductList(props.products.list);
+      setFilterName("");
     }
   };
 
@@ -76,7 +81,7 @@ export default function Products(props) {
         <Banner>
           {filter !== 0 && (
             <Category color="red" onClick={() => filterResult(0)}>
-              Supprimer filtre
+              Tous les produits
             </Category>
           )}
           {props.category.list.map((item) => {
@@ -91,20 +96,18 @@ export default function Products(props) {
           })}
         </Banner>
         <MainProductContainer>
-          <SubTitle>Tous les produits </SubTitle>
+          <SubTitle> {filterName == "" ? "Les Oeuvres" : filterName} </SubTitle>
           <ProductsContainer>
             {productList.map((item) => {
               return <Product product={item} />;
+              // return <div>Hello</div>
             })}
           </ProductsContainer>
-          {/* <div id="mainproduct" style={{ marginBottom: "50px" }}></div>
-          <hr style={{ border: "grey solid 1px", width: "80%" }} />
-          <MainProduct /> */}
         </MainProductContainer>
       </MainContainer>
     </div>
   );
-}
+};
 
 const mapDispatchToProps = {};
 
@@ -112,6 +115,8 @@ const mapStateToProps = (store) => {
   return {
     user: store.user,
     products: store.products,
-    category: store.category,
+    cat: store.category,
   };
 };
+
+export default connect(mapStateToProps, mapDispatchToProps)(Products);
