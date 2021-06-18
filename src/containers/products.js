@@ -19,6 +19,8 @@ const SubTitle = styled.p`
   font-size: 32px;
   padding-left: 20%;
   padding-right: 20%;
+  color: grey;
+  font-weight: 700;
 `;
 
 const Category = styled.div`

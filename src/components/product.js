@@ -26,12 +26,16 @@ const PriceContainer = styled.div`
 
 const Button = styled.div`
   margin-top: 10px;
-  background-color: grey;
-  color: white;
+  border: solid grey 1px;
+  color: grey;
   padding: 10px;
   border-radius: 12px;
   cursor: pointer;
   width: 100%;
+  &:hover {
+    color: white;
+    background-color: grey;
+  }
 `;
 
 const Product = (props) => {
@@ -60,14 +64,9 @@ const Product = (props) => {
         )}
         <PriceContainer>Prix: {props.product.price} euros</PriceContainer>
         <a href="#mainproduct" style={{ textAlign: "center" }}>
-          <Button onCick={() => {}}>
-            <Link
-              style={{ color: "white", marginRight: "0" }}
-              to={"/product/" + props.product.id}
-            >
-              Plus d'informations
-            </Link>
-          </Button>
+          <Link className="link-product" to={"/product/" + props.product.id}>
+            <Button onCick={() => {}}> Plus d'informations</Button>{" "}
+          </Link>
         </a>
         <a>
           <Button>Ajouter au panier</Button>

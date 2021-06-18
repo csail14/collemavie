@@ -45,13 +45,13 @@ const InfoContainer = styled.div`
   justify-content: center;
 `;
 const Button = styled.div`
-  background-color: grey;
-  color: white;
+  margin-top: 10px;
+  border: solid grey 1px;
+  color: grey;
   padding: 10px;
   border-radius: 12px;
   cursor: pointer;
-  max-width: 500px;
-  margin: 10px auto;
+  width: 100%;
 `;
 
 const ProductContainer = styled.div`

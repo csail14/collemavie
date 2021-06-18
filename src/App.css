@@ -36,6 +36,15 @@ a {
 .App-link {
   color: #61dafb;
 }
+
+.link-product {
+  color: grey;
+  margin-right: 0;
+}
+.link-product:hover {
+  color: white;
+}
+
 .contactdiv {
   margin: 20px;
 }
