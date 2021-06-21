@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
-import image1 from "../assets/image1.webp";
 import ProductBanner from "./productBanner";
 import { config } from "../config";
 

@@ -12,6 +12,7 @@ const MainContainer = styled.div`
   top: 0;
   width: 100%;
   background-color: white;
+  z-index: 100;
 `;
 const TitleContainer = styled.div`
   display: flex;

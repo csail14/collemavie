@@ -16,15 +16,17 @@ const ProductBanner = (props) => {
   }, []);
 
   return (
-    <Carousel style={{ alignItems: "end" }} cols={4} rows={1} gap={10} loop>
-      {product.map((item, index) => {
-        return (
-          <Carousel.Item key={index}>
-            <Product product={item} />
-          </Carousel.Item>
-        );
-      })}
-    </Carousel>
+    <div>
+      <Carousel style={{ alignItems: "end" }} cols={4} rows={1} gap={10} loop>
+        {product.map((item, index) => {
+          return (
+            <Carousel.Item key={index}>
+              <Product product={item} />
+            </Carousel.Item>
+          );
+        })}
+      </Carousel>
+    </div>
   );
 };
 

@@ -75,7 +75,7 @@ const TextClemenceContainer = styled.div`
 
 const ContactInfoContainer = styled.div`
   text-align: left;
-  margin: 30px;
+  margin: 30px 30px 30px 0;
 `;
 
 const createMarkup = (html) => {
