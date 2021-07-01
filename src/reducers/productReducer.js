@@ -2,12 +2,16 @@ import { LOAD_PRODUCT_INFO } from "../actions/product/actions-type";
 
 const initialState = {
   list: [],
+  media_list: [],
 };
 
-const UserReducer = (state = initialState, action) => {
+const ProductReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_PRODUCT_INFO:
-      return { list: action.payload };
+      return {
+        list: action.payload.list,
+        media_list: action.payload.media_list,
+      };
 
     default:
       break;
@@ -15,4 +19,4 @@ const UserReducer = (state = initialState, action) => {
   return state;
 };
 
-export default UserReducer;
+export default ProductReducer;

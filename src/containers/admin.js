@@ -12,6 +12,7 @@ import {
   deleteProductById,
   getProductAll,
 } from "../api/productApi";
+import { getAllMedia } from "../api/mediaApi";
 import { addCat, getCatAll } from "../api/catApi";
 import { loadCatInfo } from "../actions/category/catActions";
 
@@ -77,9 +78,12 @@ class Admin extends React.Component {
           });
         } else {
           this.setState({ addError: "Produit ajouté avec succes" });
-          getProductAll().then((resp) => {
-            const newProdut = setAllProduct(resp);
-            this.props.loadProductInfo(newProdut);
+          getProductAll().then((res) => {
+            if (res.status === 200) {
+              getAllMedia().then((resp) => {
+                this.props.loadProductInfo(res.products, resp.media);
+              });
+            }
           });
           for (let i = 0; i < this.mediaURL.length; i++) {
             let dataMedia = {
@@ -130,9 +134,12 @@ class Admin extends React.Component {
   deleteProduct(id) {
     deleteProductById(id).then((res) => {
       if (res.status === 200) {
-        getProductAll().then((resp) => {
-          const newProdut = setAllProduct(resp);
-          this.props.loadProductInfo(newProdut);
+        getProductAll().then((res) => {
+          if (res.status === 200) {
+            getAllMedia().then((resp) => {
+              this.props.loadProductInfo(res.products, resp.media);
+            });
+          }
         });
       }
     });
@@ -239,7 +246,18 @@ class Admin extends React.Component {
         </form>
         <ProductContainer>
           {this.props.category.list.map((item) => {
-            return <Product>{item.name}</Product>;
+            return (
+              <Product allMedia={this.props.products.media_list} product={item}>
+                {item.name}
+                <Button
+                  onClick={() => {
+                    this.deleteCat(item.id);
+                  }}
+                >
+                  Supprimer
+                </Button>
+              </Product>
+            );
           })}
         </ProductContainer>
       </MainContainer>

@@ -41,6 +41,7 @@ const InfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  align-items: center;
   justify-content: center;
 `;
 const Button = styled.div`
@@ -50,7 +51,7 @@ const Button = styled.div`
   padding: 10px;
   border-radius: 12px;
   cursor: pointer;
-  width: 100%;
+  width: fit-content;
 `;
 
 const ProductContainer = styled.div`
@@ -61,22 +62,31 @@ const ProductContainer = styled.div`
 
 const MainProduct = (props) => {
   const [product, setProduct] = useState(null);
+  const [media, setMedia] = useState([]);
 
   useEffect(() => {
     let index = props.match.params.id;
     let product = props.products.list.filter((item) => item.id == index)[0];
     setProduct(product);
+    if (product) {
+      setMedia(
+        props.products.media_list.filter(
+          (item) => item.product_id == product.id
+        )
+      );
+    }
   }, [props.products, props.match.params.id]);
+
   return (
     <MainContainer>
       {product && (
         <>
           <ProductContainer>
-            {product.media && (
+            {media && media.length > 0 && (
               <img
                 style={{ maxHeight: "40%", maxWidth: "40%", margin: "auto" }}
-                src={config.video_url + product.media[0]}
-                alt="product-image"
+                src={config.video_url + media[0].url}
+                alt="product"
               />
             )}
             <InfoContainer>
@@ -87,7 +97,7 @@ const MainProduct = (props) => {
               <Button>Ajouter au panier</Button>
             </InfoContainer>
           </ProductContainer>
-          <ProductBanner />
+          <ProductBanner products={props.products} />
         </>
       )}
     </MainContainer>

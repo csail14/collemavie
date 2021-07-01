@@ -4,12 +4,12 @@ import { Redirect } from "react-router-dom";
 import { config } from "../config";
 import axios from "axios";
 import { connect } from "react-redux";
-import { setAllProduct } from "./function";
 import { loadUserInfo } from "../actions/user/userActions";
 import { loadProductInfo } from "../actions/product/productActions";
 import { loadCatInfo } from "../actions/category/catActions";
 import { getProductAll } from "../api/productApi";
 import { getCatAll } from "../api/catApi";
+import { getAllMedia } from "../api/mediaApi";
 
 export default function (ChildComponent, withAuth = false) {
   class RequireAuth extends React.Component {
@@ -47,9 +47,9 @@ export default function (ChildComponent, withAuth = false) {
       if (this.props.products.list.length == 0) {
         getProductAll().then((res) => {
           if (res.status === 200) {
-            const newProduct = setAllProduct(res);
-            console.log(newProduct);
-            this.props.loadProductInfo(newProduct);
+            getAllMedia().then((resp) => {
+              this.props.loadProductInfo(res.products, resp.media);
+            });
           }
         });
       }

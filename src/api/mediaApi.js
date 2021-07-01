@@ -21,6 +21,19 @@ export const addMedia = async (data) => {
     });
 };
 
+export const getAllMedia = async () => {
+  return axios
+    .get(config.api_url + "/api/v1/all/media", {
+      headers: headers,
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+
 export const getMediaByProduct = async (id) => {
   return axios
     .get(config.api_url + "/api/v1/get/media/" + id, {

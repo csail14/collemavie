@@ -58,7 +58,6 @@ const Products = (props) => {
   });
 
   const filterResult = (newFilter) => {
-    console.log(newFilter);
     setFilter(newFilter);
     if (newFilter !== 0) {
       let productSelected = props.products.list.filter(
@@ -101,7 +100,9 @@ const Products = (props) => {
           <SubTitle> {filterName == "" ? "Les Oeuvres" : filterName} </SubTitle>
           <ProductsContainer>
             {productList.map((item) => {
-              return <Product product={item} />;
+              return (
+                <Product allMedia={props.products.media_list} product={item} />
+              );
               // return <div>Hello</div>
             })}
           </ProductsContainer>

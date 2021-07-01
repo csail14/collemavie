@@ -14,6 +14,7 @@ const TitleContainer = styled.div`
   font-size: 22px;
   font-weight: 700;
   margin-bottom: 20px;
+  white-space: nowrap;
 `;
 
 const PriceContainer = styled.div`
@@ -39,29 +40,26 @@ const Button = styled.div`
 `;
 
 const Product = (props) => {
-  const [product, setProduct] = useState([]);
+  const [media, setMedia] = useState([]);
 
   useEffect(() => {
-    if (props.products) {
-      setProduct(props.products.list);
+    if (props.product) {
+      setMedia(
+        props.allMedia.filter((item) => item.product_id == props.product.id)
+      );
     }
-  }, [props.products]);
-  console.log(props.product);
+  }, [props.product]);
+
   return (
     <MainContainer>
       <>
         <TitleContainer>{props.product.title}</TitleContainer>
-        {props.product.media && (
-          <img
-            style={{ maxHeight: "200px" }}
-            src={
-              props.product.media.length > 0
-                ? config.video_url + props.product.media[0]
-                : null
-            }
-            alt="product-image"
-          />
-        )}
+        <img
+          style={{ maxHeight: "200px" }}
+          src={media.length > 0 ? config.video_url + media[0].url : null}
+          alt="product"
+        />
+
         <PriceContainer>Prix: {props.product.price} euros</PriceContainer>
         <a href="#mainproduct" style={{ textAlign: "center" }}>
           <Link className="link-product" to={"/product/" + props.product.id}>

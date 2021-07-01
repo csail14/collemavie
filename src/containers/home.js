@@ -168,7 +168,7 @@ class Home extends React.Component {
               Modifier le text
             </EditButton>
           )}
-          <ProductBanner />
+          <ProductBanner products={this.props.products} />
           <ClemenceSection>
             <img style={{ height: "500px" }} src={Clem} />
 
@@ -225,7 +225,11 @@ class Home extends React.Component {
                 onChange={(e) => {}}
               />
               <div>
-                <input type="submit" value="Envoyer" />
+                <input
+                  style={{ cursor: "pointer" }}
+                  type="submit"
+                  value="Envoyer"
+                />
               </div>
             </form>
           </ContactSection>

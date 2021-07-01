@@ -5,7 +5,7 @@ import Home from "./containers/home";
 import Header from "./containers/header";
 import Footer from "./containers/footer";
 import Presentation from "./containers/presentation";
-import Products from "./containers/products";
+import Products from "./containers/productsDisplay";
 import RequireAuth from "./helpers/require-auth";
 import Admin from "./containers/admin";
 import Login from "./containers/login";

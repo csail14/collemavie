@@ -1,11 +1,10 @@
 import { LOAD_PRODUCT_INFO } from "./actions-type";
 
-export const loadProductInfo = (products) => {
-  console.log("dispatch", products);
+export const loadProductInfo = (products, media) => {
   return function (dispatch) {
     dispatch({
       type: LOAD_PRODUCT_INFO,
-      payload: products,
+      payload: { list: products, media_list: media },
     });
   };
 };

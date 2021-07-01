@@ -4,27 +4,17 @@ import Carousel from "react-grid-carousel";
 import { connect } from "react-redux";
 
 const ProductBanner = (props) => {
-  const [product, setProduct] = useState([]);
-  useEffect(() => {
-    if (props.oeuvre) {
-      setProduct(props.oeuvre.list);
-    }
-  }, [props.oeuvre]);
-
-  useEffect(() => {
-    console.log("products dans banner", props.oeuvre);
-  }, []);
-
   return (
     <div>
       <Carousel style={{ alignItems: "end" }} cols={4} rows={1} gap={10} loop>
-        {product.map((item, index) => {
-          return (
-            <Carousel.Item key={index}>
-              <Product product={item} />
-            </Carousel.Item>
-          );
-        })}
+        {props.products &&
+          props.products.list.map((item, index) => {
+            return (
+              <Carousel.Item key={index}>
+                <Product allMedia={props.products.media_list} product={item} />
+              </Carousel.Item>
+            );
+          })}
       </Carousel>
     </div>
   );
@@ -34,8 +24,8 @@ const mapDispatchToProps = {};
 const mapStateToProps = (store) => {
   return {
     user: store.user,
-    oeuvre: store.products,
     category: store.category,
+    products: store.products,
   };
 };
 
