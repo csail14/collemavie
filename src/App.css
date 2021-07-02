@@ -38,6 +38,8 @@ a {
 }
 
 .link-product {
+  height: 48px;
+  width: 195px;
   color: grey;
   margin-right: 0;
 }
@@ -71,6 +73,7 @@ input {
 .footer {
   position: relative;
   margin-top: 50px;
+  margin-bottom: 30px;
 }
 
 @keyframes App-logo-spin {

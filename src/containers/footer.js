@@ -19,6 +19,7 @@ class Header extends React.Component {
   render() {
     return (
       <footer className="footer">
+        © 2021 - Collemavie
         <LinkContainer>
           {" "}
           <Link className="header-link" to="/admin">

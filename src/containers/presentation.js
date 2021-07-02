@@ -4,6 +4,7 @@ import styled from "styled-components";
 import { getTextById } from "../api/textApi";
 import DOMPurify from "dompurify";
 import TextEditor from "../components/textEditor";
+import Clem from "../assets/clem_bienvenu.jpg";
 
 const MainContainer = styled.div`
   display: flex;
@@ -77,6 +78,7 @@ class Home extends React.Component {
       <div className="main">
         {/* <p className="title">Bienvenue sur le site de l'application 4b</p> */}
         <MainContainer>
+          <img style={{ width: "650px", margin: "auto" }} src={Clem} />
           {this.state.isEditingTitleMode ? (
             <TextEditor
               id={25}

@@ -8,6 +8,7 @@ const MainContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   margin: 60px;
+  align-items: center;
 `;
 
 const TitleContainer = styled.div`
@@ -23,16 +24,17 @@ const PriceContainer = styled.div`
   margin-bottom: 10px;
   font-size: 18px;
   justify-content: center;
+  color: ${(props) => (props.state !== "available" ? "red" : "")};
 `;
 
 const Button = styled.div`
+  width: 195px;
   margin-top: 10px;
   border: solid grey 1px;
   color: grey;
   padding: 10px;
   border-radius: 12px;
   cursor: pointer;
-  width: 100%;
   &:hover {
     color: white;
     background-color: grey;
@@ -60,15 +62,20 @@ const Product = (props) => {
           alt="product"
         />
 
-        <PriceContainer>Prix: {props.product.price} euros</PriceContainer>
-        <a href="#mainproduct" style={{ textAlign: "center" }}>
+        <PriceContainer state={props.product.state}>
+          {props.product.state === "available"
+            ? "Prix: " + props.product.price + " euros"
+            : "Vendu"}
+        </PriceContainer>
+
+        <a href="#mainproduct" style={{ textAlign: "center", margin: "auto" }}>
           <Link className="link-product" to={"/product/" + props.product.id}>
-            <Button onCick={() => {}}> Plus d'informations</Button>{" "}
+            <Button> Plus d'informations</Button>{" "}
           </Link>
         </a>
-        <a>
+        {/* <a style={{ textAlign: "center", margin: "auto" }}>
           <Button>Ajouter au panier</Button>
-        </a>
+        </a> */}
       </>
     </MainContainer>
   );

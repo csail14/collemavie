@@ -1,16 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { loadProductInfo } from "../actions/product/productActions";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import PhotosUploader from "../components/uploadVideo";
 import { addMedia } from "../api/mediaApi";
-import { setAllProduct } from "../helpers/function";
+import { deleteCatById } from "../api/catApi";
 
 import {
   addProduct,
   deleteProductById,
   getProductAll,
+  editProductById,
 } from "../api/productApi";
 import { getAllMedia } from "../api/mediaApi";
 import { addCat, getCatAll } from "../api/catApi";
@@ -130,7 +130,30 @@ class Admin extends React.Component {
   deleteMediaUrl = (url) => {
     this.mediaURL = [];
   };
+  deleteCat(id) {
+    deleteCatById(id).then((res) => {
+      if (res.status === 200) {
+        getCatAll().then((resp) => {
+          this.props.loadCatInfo(resp.cat);
+        });
+      }
+    });
+  }
 
+  onStateProductChange(id, item, state) {
+    item.state = state;
+    editProductById(id, item).then((res) => {
+      if (res.status === 200) {
+        getProductAll().then((res) => {
+          if (res.status === 200) {
+            getAllMedia().then((resp) => {
+              this.props.loadProductInfo(res.products, resp.media);
+            });
+          }
+        });
+      }
+    });
+  }
   deleteProduct(id) {
     deleteProductById(id).then((res) => {
       if (res.status === 200) {
@@ -203,7 +226,7 @@ class Admin extends React.Component {
           />
           <input type="submit" value="Enregistrer" name="Enregistrer" />
         </form>
-        <Title>Supprimer un produit</Title>{" "}
+        <Title>Vos produits</Title>{" "}
         <ProductContainer>
           {this.props.products.list.map((item) => {
             return (
@@ -211,11 +234,31 @@ class Admin extends React.Component {
                 {item.title}
                 <Button
                   onClick={() => {
-                    this.deleteProduct(item.id);
+                    if (
+                      window.confirm(
+                        "Etes-vous sur de vouloir supprimer ce produit ?"
+                      )
+                    ) {
+                      this.deleteProduct(item.id);
+                    } else {
+                    }
                   }}
                 >
                   Supprimer
                 </Button>
+                <select
+                  value={item.state}
+                  onChange={(e) =>
+                    this.onStateProductChange(
+                      item.id,
+                      item,
+                      e.currentTarget.value
+                    )
+                  }
+                >
+                  <option value="available">A vendre</option>
+                  <option value="sold">Vendu</option>
+                </select>
               </Product>
             );
           })}

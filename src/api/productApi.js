@@ -45,6 +45,20 @@ export const getProductById = async (id) => {
       return err;
     });
 };
+
+export const editProductById = async (id, data) => {
+  return axios
+    .put(config.api_url + "/api/v1/edit/product/" + id, data, {
+      headers: headers,
+    })
+    .then((response) => {
+      return response.data;
+    })
+    .catch((err) => {
+      return err;
+    });
+};
+
 export const deleteProductById = async (id) => {
   return axios
     .delete(config.api_url + "/api/v1/delete/product/" + id, {

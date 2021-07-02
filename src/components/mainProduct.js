@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import ProductBanner from "./productBanner";
 import { config } from "../config";
+import ImageGallery from "react-image-gallery";
+import "react-image-gallery/styles/css/image-gallery.css";
 
 const MainContainer = styled.div`
   display: flex;
@@ -25,6 +27,7 @@ const PriceContainer = styled.div`
   margin-bottom: 10px;
   font-size: 18px;
   justify-content: center;
+  color: ${(props) => (props.state !== "available" ? "red" : "")};s
 `;
 const DescriptionContainer = styled.div`
   display: flex;
@@ -33,8 +36,8 @@ const DescriptionContainer = styled.div`
   font-size: 14px;
   justify-content: center;
   font-size: 20px;
-  margin-left: 200px;
-  margin-right: 200px;
+  margin-left: 100px;
+  margin-right: 100px;
 `;
 
 const InfoContainer = styled.div`
@@ -60,20 +63,32 @@ const ProductContainer = styled.div`
   margin: 20px;
 `;
 
+const PhotoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+`;
+
 const MainProduct = (props) => {
   const [product, setProduct] = useState(null);
   const [media, setMedia] = useState([]);
-
+  console.log("media", media);
   useEffect(() => {
     let index = props.match.params.id;
     let product = props.products.list.filter((item) => item.id == index)[0];
     setProduct(product);
     if (product) {
-      setMedia(
-        props.products.media_list.filter(
-          (item) => item.product_id == product.id
-        )
-      );
+      let gallery_media = [];
+      props.products.media_list
+        .filter((item) => item.product_id == product.id)
+        .map((el) => {
+          let element = {};
+          element.original = config.video_url + el.url;
+          element.thumbnail = config.video_url + el.url;
+          gallery_media.push(element);
+        });
+      console.log(gallery_media);
+      setMedia(gallery_media);
     }
   }, [props.products, props.match.params.id]);
 
@@ -82,19 +97,17 @@ const MainProduct = (props) => {
       {product && (
         <>
           <ProductContainer>
-            {media && media.length > 0 && (
-              <img
-                style={{ maxHeight: "40%", maxWidth: "40%", margin: "auto" }}
-                src={config.video_url + media[0].url}
-                alt="product"
-              />
-            )}
+            {media && media.length > 0 && <ImageGallery items={media} />}
             <InfoContainer>
               <TitleContainer>{product.title}</TitleContainer>
               <DescriptionContainer>{product.description}</DescriptionContainer>
-              <PriceContainer>Prix: {product.price} euros</PriceContainer>
+              <PriceContainer state={product.state}>
+                {product.state === "available"
+                  ? "Prix: " + product.price + " euros"
+                  : "Vendu"}
+              </PriceContainer>
 
-              <Button>Ajouter au panier</Button>
+              {/* <Button>Ajouter au panier</Button> */}
             </InfoContainer>
           </ProductContainer>
           <ProductBanner products={props.products} />
