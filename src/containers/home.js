@@ -7,6 +7,9 @@ import { getTextById } from "../api/textApi";
 import TextEditor from "../components/textEditor";
 import DOMPurify from "dompurify";
 import ProductBanner from "../components/productBanner";
+import InstagramEmbed from "react-instagram-embed";
+import InstagramFeed from "react-ig-feed";
+import "react-ig-feed/dist/index.css";
 
 const MainContainer = styled.div`
   display: flex;
@@ -180,6 +183,23 @@ class Home extends React.Component {
               </p>
             </TextClemenceContainer>
           </ClemenceSection>
+          <InstagramEmbed
+            url="https://instagr.am/p/Zw9o4/"
+            maxWidth={320}
+            hideCaption={false}
+            containerTagName="div"
+            protocol=""
+            injectScript
+            onLoading={() => {}}
+            onSuccess={() => {}}
+            onAfterRender={() => {}}
+            onFailure={() => {}}
+          />
+          <InstagramFeed
+            token="IGQVJWVktFTjJ1cmh1dDM0VWkxVzY0ZAWVieEstdl9MSmk1OGRIMDZAsSmRsQ09rcml1cHVLU1p0dm9yTlRYOFN4MjdNQ0k2cGtESEJoVk1OcnM1eDYzX3o5SzNiZAzJjTW1yQlZAsc2VtSXNLRXBVOGNIVAZDZD"
+            counter="6"
+          />
+
           <ContactSection>
             <ContactInfoContainer>
               <h2>Me contacter</h2>

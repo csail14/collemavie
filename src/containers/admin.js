@@ -5,6 +5,8 @@ import styled from "styled-components";
 import PhotosUploader from "../components/uploadVideo";
 import { addMedia } from "../api/mediaApi";
 import { deleteCatById } from "../api/catApi";
+import EditProductModal from "../components/EditProductModal";
+import Modal from "@material-ui/core/Modal";
 
 import {
   addProduct,
@@ -21,6 +23,7 @@ const Title = styled.div`
   font-size: 30px;
   padding: 10px;
 `;
+
 const MainContainer = styled.div`
   margin-top: 100px;
 `;
@@ -35,6 +38,7 @@ const Product = styled.div`
   display: flex;
   flex-direction: column;
   padding: 20px;
+  font-weight: 700;
 `;
 
 const Button = styled.div`
@@ -52,6 +56,9 @@ class Admin extends React.Component {
     this.state = {
       addError: null,
       addCatError: null,
+      modalStyle: this.getModalStyle,
+      isOpen: false,
+      productSelected: null,
     };
     this.title = "";
     this.description = "";
@@ -59,6 +66,23 @@ class Admin extends React.Component {
     this.titreCat = "";
     this.cat_id = 5;
     this.mediaURL = [];
+  }
+
+  handleOpen = () => {
+    this.setState({ isOpen: !this.state.isOpen });
+  };
+  rand() {
+    return Math.round(Math.random() * 20) - 10;
+  }
+  getModalStyle() {
+    const top = 50 + this.rand();
+    const left = 50 + this.rand();
+
+    return {
+      top: `${top}%`,
+      left: `${left}%`,
+      transform: `translate(-${top}%, -${left}%)`,
+    };
   }
 
   onSubmitForm = (e) => {
@@ -123,12 +147,15 @@ class Admin extends React.Component {
   onChangeCat(value) {
     this.cat_id = value;
   }
-
   setMediaUrl = (url) => {
     this.mediaURL.push(url);
   };
   deleteMediaUrl = (url) => {
     this.mediaURL = [];
+  };
+
+  handleSelectProduct = (item) => {
+    this.setState({ productSelected: item });
   };
   deleteCat(id) {
     deleteCatById(id).then((res) => {
@@ -246,6 +273,14 @@ class Admin extends React.Component {
                 >
                   Supprimer
                 </Button>
+                <Button
+                  onClick={() => {
+                    this.handleSelectProduct(item);
+                    this.handleOpen();
+                  }}
+                >
+                  Modifier
+                </Button>
                 <select
                   value={item.state}
                   onChange={(e) =>
@@ -303,6 +338,11 @@ class Admin extends React.Component {
             );
           })}
         </ProductContainer>
+        <EditProductModal
+          isOpen={this.state.isOpen}
+          handleOpen={this.handleOpen}
+          productSelected={this.state.productSelected}
+        />
       </MainContainer>
     );
   }
