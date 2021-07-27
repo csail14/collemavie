@@ -26,6 +26,12 @@
   color: white;
 }
 
+.insta_content {
+  padding: 28px;
+  margin: auto;
+  min-width: 30%;
+}
+
 a {
   text-decoration: none;
   margin-right: 25px;
