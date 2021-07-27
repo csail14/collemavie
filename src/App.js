@@ -1,6 +1,6 @@
 import "./App.css";
 import { Switch, Route } from "react-router-dom";
-
+import ScrollToTop from "./helpers/ScrollTopTop";
 import Home from "./containers/home";
 import Header from "./containers/header";
 import Footer from "./containers/footer";
@@ -15,6 +15,7 @@ function App() {
   return (
     <div className="App">
       <Header />
+      <ScrollToTop />
       <Switch>
         <Route exact path="/" component={RequireAuth(Home)} />
         <Route exact path="/home" component={RequireAuth(Home)} />
@@ -30,6 +31,18 @@ function App() {
         <Route exact path="/admin" component={RequireAuth(Admin, true)} />
       </Switch>
       <Footer />
+
+      <div
+        class="insta"
+        style={{
+          color: "#0095f6",
+          fontSize: "22px",
+          fontWeight: "700",
+          fontFamily: "sans-serif",
+        }}
+      >
+        View more on Instagram
+      </div>
     </div>
   );
 }

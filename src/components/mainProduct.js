@@ -72,7 +72,7 @@ const PhotoContainer = styled.div`
 const MainProduct = (props) => {
   const [product, setProduct] = useState(null);
   const [media, setMedia] = useState([]);
-  console.log("media", media);
+
   useEffect(() => {
     let index = props.match.params.id;
     let product = props.products.list.filter((item) => item.id == index)[0];

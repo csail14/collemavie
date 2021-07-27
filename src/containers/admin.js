@@ -111,12 +111,16 @@ class Admin extends React.Component {
           });
           for (let i = 0; i < this.mediaURL.length; i++) {
             let dataMedia = {
-              url: this.mediaURL[0],
+              url: this.mediaURL[i],
               product_id: res.result.insertId,
             };
             addMedia(dataMedia).then((resMedia) => {});
           }
         }
+      });
+    } else {
+      this.setState({
+        addError: "Veuillez remplir tous les champs",
       });
     }
   };
