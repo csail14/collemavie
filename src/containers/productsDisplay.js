@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import Product from "../components/product";
+import { isMobile } from "react-device-detect";
 
 const MainProductContainer = styled.div`
   display: flex;
@@ -31,7 +32,7 @@ const Category = styled.div`
   cursor: pointer;
 `;
 const Banner = styled.div`
-  display: flex;
+  display: ${isMobile ? "none" : "flex"};
   padding-top: 100px;
   flex-direction: column;
   font-size: 32px;

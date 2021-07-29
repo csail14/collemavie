@@ -6,7 +6,7 @@ import PhotosUploader from "../components/uploadVideo";
 import { addMedia } from "../api/mediaApi";
 import { deleteCatById } from "../api/catApi";
 import EditProductModal from "../components/EditProductModal";
-import Modal from "@material-ui/core/Modal";
+import { isMobile } from "react-device-detect";
 
 import {
   addProduct,
@@ -200,6 +200,7 @@ class Admin extends React.Component {
   }
 
   render() {
+    console.log(isMobile);
     return (
       <MainContainer>
         <Title>Ajouter un produit</Title>

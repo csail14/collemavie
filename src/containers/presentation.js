@@ -5,6 +5,7 @@ import { getTextById } from "../api/textApi";
 import DOMPurify from "dompurify";
 import TextEditor from "../components/textEditor";
 import Clem from "../assets/clem_bienvenu.jpg";
+import { isMobile } from "react-device-detect";
 
 const MainContainer = styled.div`
   display: flex;
@@ -16,18 +17,18 @@ const MainContainer = styled.div`
 const Title = styled.p`
   font-size: 62px;
   font-weight: 700;
-  padding-left: 20%;
-  padding-right: 20%;
+  padding-left: ${isMobile ? "40px" : "20%"};
+  padding-right: ${isMobile ? "40px" : "20%"};
 `;
 const SubTitle = styled.p`
   font-size: 32px;
-  padding-left: 20%;
-  padding-right: 20%;
+  padding-left: ${isMobile ? "40px" : "20%"};
+  padding-right: ${isMobile ? "40px" : "20%"};
 `;
 const Paragraphe = styled.p`
   font-size: 22px;
-  padding-left: 20%;
-  padding-right: 20%;
+  padding-left: ${isMobile ? "40px" : "20%"};
+  padding-right: ${isMobile ? "40px" : "20%"};
 `;
 const EditButton = styled.div`
   padding: 20px;
@@ -78,7 +79,14 @@ class Home extends React.Component {
       <div className="main">
         {/* <p className="title">Bienvenue sur le site de l'application 4b</p> */}
         <MainContainer>
-          <img style={{ width: "650px", margin: "auto" }} src={Clem} />
+          <img
+            style={{
+              width: isMobile ? "300px" : "650px",
+              margin: "auto",
+              marginTop: isMobile ? "30px" : "",
+            }}
+            src={Clem}
+          />
           {this.state.isEditingTitleMode ? (
             <TextEditor
               id={25}

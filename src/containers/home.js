@@ -7,6 +7,7 @@ import { getTextById } from "../api/textApi";
 import TextEditor from "../components/textEditor";
 import DOMPurify from "dompurify";
 import ProductBanner from "../components/productBanner";
+import { isMobile } from "react-device-detect";
 
 const MainContainer = styled.div`
   display: flex;
@@ -16,6 +17,7 @@ const MainContainer = styled.div`
 `;
 const ImageContainer = styled.div`
   display: flex;
+  flex-direction: ${isMobile ? "column" : "row"}
   height: 400px;
   width: 100%;
   background-size: cover;
@@ -25,34 +27,38 @@ const ImageContainer = styled.div`
 const Title = styled.div`
   font-size: 62px;
   font-weight: 700;
-  padding-left: 20%;
-  padding-right: 20%;
-  padding-top: 20px;
+  padding-left: ${isMobile ? "" : "20%"};
+  padding-right: ${isMobile ? "" : "20%"};
+  padding-top: 30px;
 `;
 const SubTitle = styled.div`
   font-size: 32px;
-  padding-left: 20%;
-  padding-right: 20%;
+  padding-left: ${isMobile ? "" : "20%"};
+  padding-right: ${isMobile ? "" : "20%"};
 `;
 const Paragraphe = styled.div`
   font-size: 22px;
-  padding-left: 20%;
-  padding-right: 20%;
+  padding-left: ${isMobile ? "40px" : "20%"};
+  padding-right: ${isMobile ? "40px" : "20%"};
 `;
 
 const ClemenceSection = styled.div`
   display: flex;
   justify-content: space-between;
+  flex-direction: ${isMobile ? "column" : "row"};
   align-items: center;
   margin-top: 30px;
-  margin-left: 50px;
-  margin-right: 100px;
+  max-width: 100%;
+  margin-left: ${isMobile ? "auto" : "50px;"};
+  margin-right: ${isMobile ? "auto" : "100px;"};
 `;
 const ContactSection = styled.div`
   display: flex;
+  flex-direction: ${isMobile ? "column" : "row"};
   justify-content: center;
-  align-items: flex-start;
+  align-items: ${isMobile ? "center" : "flex-start"};
   margin-top: 30px;
+  margin: auto;
 `;
 
 const EditButton = styled.div`
@@ -70,12 +76,14 @@ const TextClemenceContainer = styled.div`
   font-size: 28px;
   margin: 30px;
   paddding: 0px;
-  width: 400px;
+  width: ${isMobile ? "" : "400px"};
+  max-width: 100%;
+  padding: ${isMobile ? "20px" : ""};
 `;
 
 const ContactInfoContainer = styled.div`
   text-align: left;
-  margin: 30px 30px 30px 0;
+  margin: 30px 30px 30px 30px;
 `;
 
 const createMarkup = (html) => {
@@ -124,6 +132,7 @@ class Home extends React.Component {
   };
 
   render() {
+    console.log(isMobile);
     return (
       <div className="main">
         <MainContainer>
@@ -169,7 +178,7 @@ class Home extends React.Component {
           )}
           <ProductBanner products={this.props.products} />
           <ClemenceSection>
-            <img style={{ height: "500px" }} src={Clem} />
+            <img style={{ height: isMobile ? "200px" : "500px" }} src={Clem} />
 
             <TextClemenceContainer>
               <p>Sourions, rions et collons la vie à notre image...</p>
@@ -182,7 +191,7 @@ class Home extends React.Component {
 
           <ContactSection>
             <ContactInfoContainer>
-              <h2>Me contacter</h2>
+              <h2 style={{ marginLeft: "30px" }}>Me contacter</h2>
               {this.state.isEditingContactMode ? (
                 <TextEditor
                   id={5}
