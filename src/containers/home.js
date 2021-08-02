@@ -132,7 +132,6 @@ class Home extends React.Component {
   };
 
   render() {
-    console.log(isMobile);
     return (
       <div className="main">
         <MainContainer>

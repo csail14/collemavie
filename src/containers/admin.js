@@ -200,7 +200,6 @@ class Admin extends React.Component {
   }
 
   render() {
-    console.log(isMobile);
     return (
       <MainContainer>
         <Title>Ajouter un produit</Title>

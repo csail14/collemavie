@@ -87,7 +87,6 @@ const MainProduct = (props) => {
           element.thumbnail = config.video_url + el.url;
           gallery_media.push(element);
         });
-      console.log(gallery_media);
       setMedia(gallery_media);
     }
   }, [props.products, props.match.params.id]);

@@ -34,6 +34,7 @@ const LinkContainer = styled.div`
 const ContainerMobile = styled.div`
   display: flex;
   flex-direction: column;
+  background-color: grey;
   width: 100vw;
 `;
 
@@ -56,7 +57,6 @@ class Header extends React.Component {
     event.preventDefault();
   }
   render() {
-    console.log(this.state.showMenu);
     return (
       <>
         <MainContainer>
@@ -97,14 +97,38 @@ class Header extends React.Component {
           </ColumnMenu>
           {this.state.showMenu && (
             <ContainerMobile>
-              <Link className="header-link" to="/home">
-                Bienvenue
+              <Link
+                className="header-link-mobile"
+                to="/home"
+                onClick={() => {
+                  this.setState({ showMenu: !this.state.showMenu });
+                }}
+              >
+                <div style={{ color: "white", lineHeight: "40px" }}>
+                  Bienvenue
+                </div>
               </Link>
-              <Link className="header-link" to="/presentation">
-                Enchantée, moi c'est Clémence
+              <Link
+                className="header-link-mobile"
+                to="/presentation"
+                onClick={() => {
+                  this.setState({ showMenu: !this.state.showMenu });
+                }}
+              >
+                <div style={{ color: "white", lineHeight: "40px" }}>
+                  Enchantée, moi c'est Clémence
+                </div>
               </Link>
-              <Link className="header-link" to="/products">
-                Mes oeuvres, ma vie
+              <Link
+                className="header-link-mobile"
+                to="/products"
+                onClick={() => {
+                  this.setState({ showMenu: !this.state.showMenu });
+                }}
+              >
+                <div style={{ color: "white", lineHeight: "40px" }}>
+                  Mes oeuvres, ma vie
+                </div>
               </Link>
             </ContainerMobile>
           )}
