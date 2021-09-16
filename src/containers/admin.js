@@ -7,6 +7,7 @@ import { addMedia } from "../api/mediaApi";
 import { deleteCatById } from "../api/catApi";
 import EditProductModal from "../components/EditProductModal";
 import { isMobile } from "react-device-detect";
+import { setTextById, getTextById } from "../api/textApi";
 
 import {
   addProduct,
@@ -59,6 +60,9 @@ class Admin extends React.Component {
       modalStyle: this.getModalStyle,
       isOpen: false,
       productSelected: null,
+      header1: "",
+      header2: "",
+      header3: "",
     };
     this.title = "";
     this.description = "";
@@ -66,6 +70,18 @@ class Admin extends React.Component {
     this.titreCat = "";
     this.cat_id = 5;
     this.mediaURL = [];
+  }
+
+  componentDidMount() {
+    getTextById(85).then((res) => {
+      this.setState({ header1: res.text.text });
+    });
+    getTextById(95).then((res) => {
+      this.setState({ header2: res.text.text });
+    });
+    getTextById(105).then((res) => {
+      this.setState({ header3: res.text.text });
+    });
   }
 
   handleOpen = () => {
@@ -347,6 +363,57 @@ class Admin extends React.Component {
           handleOpen={this.handleOpen}
           productSelected={this.state.productSelected}
         />
+        <Title>Modifier le header</Title>
+        Rafraichir la page après modification pour voir les changements
+        <ProductContainer>
+          <div>
+            <input
+              value={this.state.header1}
+              onChange={(e) => {
+                this.setState({ header1: e.currentTarget.value });
+              }}
+            />
+            <Button
+              onClick={() => {
+                setTextById(85, this.state.header1);
+              }}
+            >
+              Modifier
+            </Button>
+          </div>
+          <div>
+            <input
+              value={this.state.header2}
+              onChange={(e) => {
+                this.setState({ header2: e.currentTarget.value });
+              }}
+            />
+
+            <Button
+              onClick={() => {
+                setTextById(95, this.state.header2);
+              }}
+            >
+              Modifier
+            </Button>
+          </div>
+          <div>
+            <input
+              value={this.state.header3}
+              onChange={(e) => {
+                this.setState({ header3: e.currentTarget.value });
+              }}
+            />
+
+            <Button
+              onClick={() => {
+                setTextById(105, this.state.header3);
+              }}
+            >
+              Modifier
+            </Button>
+          </div>
+        </ProductContainer>
       </MainContainer>
     );
   }

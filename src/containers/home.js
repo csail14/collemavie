@@ -17,7 +17,7 @@ const MainContainer = styled.div`
 `;
 const ImageContainer = styled.div`
   display: flex;
-  flex-direction: ${isMobile ? "column" : "row"}
+  flex-direction: ${isMobile ? "column" : "row"};
   height: 400px;
   width: 100%;
   background-size: cover;

@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import { isMobile } from "react-device-detect";
 import menu from "../assets/menu-outline.png";
+import { getTextById } from "../api/textApi";
 
 const MainContainer = styled.div`
   display: flex;
@@ -50,7 +51,22 @@ class Header extends React.Component {
     super(props);
     this.state = {
       showMenu: false,
+      header1: "",
+      header2: "",
+      header3: "",
     };
+  }
+
+  componentDidMount() {
+    getTextById(85).then((res) => {
+      this.setState({ header1: res.text.text });
+    });
+    getTextById(95).then((res) => {
+      this.setState({ header2: res.text.text });
+    });
+    getTextById(105).then((res) => {
+      this.setState({ header3: res.text.text });
+    });
   }
 
   showSettings(event) {
@@ -83,13 +99,13 @@ class Header extends React.Component {
               <nav>
                 <LinkContainer>
                   <Link className="header-link" to="/home">
-                    Bienvenue
+                    {this.state.header1}
                   </Link>
                   <Link className="header-link" to="/presentation">
-                    Enchantée, moi c'est Clémence
+                    {this.state.header2}
                   </Link>
                   <Link className="header-link" to="/products">
-                    Mes oeuvres, ma vie
+                    {this.state.header3}
                   </Link>
                 </LinkContainer>
               </nav>
