@@ -2,7 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import image1 from "../assets/image1.webp";
-import TextField from "@mui/material/TextField";
 import Clem from "../assets/clem1.webp";
 import { getTextById } from "../api/textApi";
 import TextEditor from "../components/textEditor";
