@@ -11,7 +11,7 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 60px;
+  margin-top: 120px;
 `;
 
 const Title = styled.p`

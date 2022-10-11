@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import styled from "styled-components";
 import image1 from "../assets/image1.webp";
+import TextField from "@mui/material/TextField";
 import Clem from "../assets/clem1.webp";
 import { getTextById } from "../api/textApi";
 import TextEditor from "../components/textEditor";
@@ -30,16 +31,19 @@ const Title = styled.div`
   padding-left: ${isMobile ? "" : "20%"};
   padding-right: ${isMobile ? "" : "20%"};
   padding-top: 30px;
+  text-align: center;
 `;
 const SubTitle = styled.div`
   font-size: 32px;
   padding-left: ${isMobile ? "" : "20%"};
   padding-right: ${isMobile ? "" : "20%"};
+  text-align: justify;
 `;
 const Paragraphe = styled.div`
   font-size: 22px;
   padding-left: ${isMobile ? "40px" : "20%"};
   padding-right: ${isMobile ? "40px" : "20%"};
+  text-align: justify;
 `;
 
 const ClemenceSection = styled.div`
@@ -47,8 +51,10 @@ const ClemenceSection = styled.div`
   justify-content: space-between;
   flex-direction: ${isMobile ? "column" : "row"};
   align-items: center;
-  margin-top: 30px;
+  margin-top: 40px;
+  margin-bottom: 40px;
   max-width: 100%;
+  padding-top: 40px;
   margin-left: ${isMobile ? "auto" : "50px;"};
   margin-right: ${isMobile ? "auto" : "100px;"};
 `;
@@ -56,9 +62,10 @@ const ContactSection = styled.div`
   display: flex;
   flex-direction: ${isMobile ? "column" : "row"};
   justify-content: center;
-  align-items: ${isMobile ? "center" : "flex-start"};
+  align-items: ${isMobile ? "center" : "center"};
   margin-top: 30px;
-  margin: auto;
+
+  text-align: center;
 `;
 
 const EditButton = styled.div`
@@ -82,8 +89,8 @@ const TextClemenceContainer = styled.div`
 `;
 
 const ContactInfoContainer = styled.div`
-  text-align: left;
-  margin: 30px 30px 30px 30px;
+  text-align: center;
+  margin: 0 60px 30px 60px;
 `;
 
 const createMarkup = (html) => {
@@ -175,6 +182,7 @@ class Home extends React.Component {
               Modifier le text
             </EditButton>
           )}
+          <h2 style={{ paddingTop: 40 }}>Mes oeuvres</h2>
           <ProductBanner products={this.props.products} />
           <ClemenceSection>
             <img style={{ height: isMobile ? "200px" : "500px" }} src={Clem} />
@@ -189,8 +197,8 @@ class Home extends React.Component {
           </ClemenceSection>
 
           <ContactSection>
+            <h2>Me contacter</h2>
             <ContactInfoContainer>
-              <h2 style={{ marginLeft: "30px" }}>Me contacter</h2>
               {this.state.isEditingContactMode ? (
                 <TextEditor
                   id={5}
@@ -213,28 +221,69 @@ class Home extends React.Component {
                 </EditButton>
               )}
             </ContactInfoContainer>
-            <form className="contactform">
+
+            <form
+              style={isMobile ? { textAlign: "center" } : {}}
+              className="contactform"
+            >
               <div className="contactdiv">
-                <input type="text" placeholder="Nom" onChange={(e) => {}} />
-                <input type="text" placeholder="Prénom" onChange={(e) => {}} />
+                <input
+                  type="text"
+                  placeholder="Nom"
+                  onChange={(e) => {}}
+                  style={{
+                    borderWidth: "1px",
+                    borderColor: "#c8c8c8",
+                  }}
+                />
+                <input
+                  type="text"
+                  placeholder="Prénom"
+                  onChange={(e) => {}}
+                  style={{
+                    borderWidth: "1px",
+                    borderColor: "#c8c8c8",
+                  }}
+                />
               </div>
               <div className="contactdiv">
                 <input
                   type="text"
                   placeholder="Téléphone"
                   onChange={(e) => {}}
+                  style={{
+                    borderWidth: "1px",
+                    borderColor: "#c8c8c8",
+                  }}
                 />
-                <input type="text" placeholder="Adresse" onChange={(e) => {}} />
+                <input
+                  type="text"
+                  placeholder="Adresse"
+                  style={{
+                    borderWidth: "1px",
+                    borderColor: "#c8c8c8",
+                  }}
+                  onChange={(e) => {}}
+                />
               </div>
-              <textarea
-                className="contactTextarea"
+              <input
                 type="text"
+                className="contactTextarea"
                 placeholder="Votre message"
                 onChange={(e) => {}}
+                style={{
+                  borderWidth: "1px",
+                  borderColor: "#c8c8c8",
+                }}
               />
               <div>
                 <input
-                  style={{ cursor: "pointer" }}
+                  style={{
+                    cursor: "pointer",
+                    backgroundColor: "white",
+                    border: "none",
+                    boxShadow: "1px 1px 3px black",
+                  }}
                   type="submit"
                   value="Envoyer"
                 />

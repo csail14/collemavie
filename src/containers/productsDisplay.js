@@ -3,24 +3,26 @@ import { connect } from "react-redux";
 import styled from "styled-components";
 import Product from "../components/product";
 import { isMobile } from "react-device-detect";
+import Grid from "@mui/material/Grid";
 
 const MainProductContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 60px;
+
   width: -webkit-fill-available;
 `;
 const MainContainer = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  padding-top: 100px;
 `;
 
-const SubTitle = styled.p`
+const SubTitle = styled.div`
   font-size: 32px;
   padding-left: 20%;
   padding-right: 20%;
-  color: grey;
+  margin-top: 50px;
   font-weight: 700;
 `;
 
@@ -28,23 +30,27 @@ const Category = styled.div`
   font-size: 20px;
   margin-top: 20px;
   color: ${(props) =>
-    props.color ? "red" : props.selected ? "black" : "grey"};
+    props.color ? props.color : props.selected ? "black" : "grey"};
   cursor: pointer;
 `;
 const Banner = styled.div`
   display: ${isMobile ? "none" : "flex"};
-  padding-top: 100px;
+  padding-top: 30px;
   flex-direction: column;
   font-size: 32px;
   background-color: #80808036;
-  border-radius: 12px;
+  box-shadow: 2px 3px 5px #a59d9d;
   margin-top: 90px;
   width: 250px;
+  text-align: left;
+  padding-left: 20px;
 `;
-const ProductsContainer = styled.p`
+const ProductsContainer = styled.div`
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  overflow: scroll;
+  height: 100vh;
 `;
 
 const Products = (props) => {
@@ -80,33 +86,59 @@ const Products = (props) => {
     <div className="main">
       {/* <p className="title">Bienvenue sur le site de l'application 4b</p> */}
       <MainContainer>
-        <Banner>
-          {filter !== 0 && (
-            <Category color="red" onClick={() => filterResult(0)}>
-              Tous les produits
-            </Category>
-          )}
+        {/* <Stack direction="row" spacing={2}>
+          <Button disabled>Filtrer par type</Button>
+
           {props.category.list.map((item) => {
             return (
-              <Category
+              <Button
                 selected={filter == item.id ? true : false}
                 onClick={() => filterResult(item.id)}
               >
                 {item.name}
-              </Category>
+              </Button>
             );
           })}
-        </Banner>
+          {filter !== 0 && (
+            <Button color="red" onClick={() => filterResult(0)}>
+              Tous les produits
+            </Button>
+          )}
+        </Stack> */}
         <MainProductContainer>
-          <SubTitle> {filterName == "" ? "Les Oeuvres" : filterName} </SubTitle>
-          <ProductsContainer>
+          <SubTitle>
+            {" "}
+            {filterName === "" ? "Les Oeuvres" : filterName}{" "}
+          </SubTitle>
+          <Grid
+            container
+            rowSpacing={1}
+            columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+            columns={{ xs: 4, sm: 8, md: 12 }}
+          >
             {productList.map((item) => {
               return (
-                <Product allMedia={props.products.media_list} product={item} />
+                <Grid
+                  item
+                  xs={4}
+                  sm={4}
+                  md={4}
+                  sx={{
+                    "&:hover": {
+                      color: "red",
+                      backgroundColor: "white",
+                    },
+                  }}
+                >
+                  <Product
+                    allMedia={props.products.media_list}
+                    product={item}
+                  />
+                </Grid>
               );
-              // return <div>Hello</div>
             })}
-          </ProductsContainer>
+            -
+          </Grid>
         </MainProductContainer>
       </MainContainer>
     </div>

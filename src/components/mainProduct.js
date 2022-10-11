@@ -5,12 +5,14 @@ import ProductBanner from "./productBanner";
 import { config } from "../config";
 import ImageGallery from "react-image-gallery";
 import "react-image-gallery/styles/css/image-gallery.css";
+import { isMobile } from "react-device-detect";
 
 const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 60px;
+  margin: ${isMobile ? "" : "60px"};
+  margin-top: 120px;
   text-align: center;
 `;
 
@@ -34,10 +36,11 @@ const DescriptionContainer = styled.div`
   margin-top: 20px;
   margin-bottom: 10px;
   font-size: 14px;
+  text-align: justify;
   justify-content: center;
   font-size: 20px;
-  margin-left: 100px;
-  margin-right: 100px;
+  margin-left: ${isMobile ? "" : "100px"};
+  margin-right: ${isMobile ? "" : "100px"};
 `;
 
 const InfoContainer = styled.div`
@@ -46,6 +49,7 @@ const InfoContainer = styled.div`
   text-align: center;
   align-items: center;
   justify-content: center;
+  max-width: 90vw;
 `;
 const Button = styled.div`
   margin-top: 10px;
@@ -96,9 +100,14 @@ const MainProduct = (props) => {
       {product && (
         <>
           <ProductContainer>
-            {media && media.length > 0 && <ImageGallery items={media} />}
+            {media && !isMobile && media.length > 0 && (
+              <ImageGallery items={media} />
+            )}
             <InfoContainer>
               <TitleContainer>{product.title}</TitleContainer>
+              {media && isMobile && media.length > 0 && (
+                <ImageGallery items={media} />
+              )}
               <DescriptionContainer>{product.description}</DescriptionContainer>
               <PriceContainer state={product.state}>
                 {product.state === "available"
@@ -109,6 +118,7 @@ const MainProduct = (props) => {
               {/* <Button>Ajouter au panier</Button> */}
             </InfoContainer>
           </ProductContainer>
+          <h2 style={{ marginTop: 100 }}>Nous vous recommandons</h2>
           <ProductBanner products={props.products} />
         </>
       )}

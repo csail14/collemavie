@@ -7,8 +7,13 @@ const MainContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 60px;
+  margin: 30px 10px;
+  margin-bottom: 0;
   align-items: center;
+  &:hover {
+    box-shadow: 0px 2px 1px -1px rgb(0 0 0 / 20%),
+      0px 1px 1px 0px rgb(0 0 0 / 14%), 0px 1px 3px 0px rgb(0 0 0 / 12%);
+  }
 `;
 
 const TitleContainer = styled.div`
@@ -53,31 +58,24 @@ const Product = (props) => {
   }, [props.product]);
 
   return (
-    <MainContainer>
-      <>
-        <TitleContainer>{props.product.title}</TitleContainer>
-        <img
-          style={{ maxHeight: "200px" }}
-          src={media.length > 0 ? config.video_url + media[0].url : null}
-          alt="product"
-        />
+    <Link to={"/product/" + props.product.id}>
+      <MainContainer>
+        <>
+          <TitleContainer>{props.product.title}</TitleContainer>
+          <img
+            style={{ maxHeight: "200px" }}
+            src={media.length > 0 ? config.video_url + media[0].url : null}
+            alt="product"
+          />
 
-        <PriceContainer state={props.product.state}>
-          {props.product.state === "available"
-            ? "Prix: " + props.product.price + " euros"
-            : "Vendu"}
-        </PriceContainer>
-
-        <a href="#mainproduct" style={{ textAlign: "center", margin: "auto" }}>
-          <Link className="link-product" to={"/product/" + props.product.id}>
-            <Button> Plus d'informations</Button>{" "}
-          </Link>
-        </a>
-        {/* <a style={{ textAlign: "center", margin: "auto" }}>
-          <Button>Ajouter au panier</Button>
-        </a> */}
-      </>
-    </MainContainer>
+          <PriceContainer state={props.product.state}>
+            {props.product.state === "available"
+              ? "Prix: " + props.product.price + " euros"
+              : "Vendu"}
+          </PriceContainer>
+        </>
+      </MainContainer>
+    </Link>
   );
 };
 

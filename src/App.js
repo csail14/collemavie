@@ -1,4 +1,5 @@
 import "./App.css";
+import { useEffect } from "react";
 import { Switch, Route } from "react-router-dom";
 import ScrollToTop from "./helpers/ScrollTopTop";
 import Home from "./containers/home";
@@ -12,6 +13,13 @@ import Login from "./containers/login";
 import MainProduct from "./components/mainProduct";
 
 function App() {
+  useEffect(() => {
+    console.log("hello");
+    fetch("/api")
+      .then((res) => res.json())
+      .then((data) => console.log(data.message));
+  }, []);
+  console.log("hello");
   return (
     <div className="App">
       <Header />
@@ -35,13 +43,24 @@ function App() {
       <div
         class="insta"
         style={{
-          color: "#0095f6",
-          fontSize: "22px",
+          fontSize: "15px",
           fontWeight: "700",
           fontFamily: "sans-serif",
         }}
       >
-        View more on Instagram
+        Suivez moi sur Instagram :{" "}
+        <a
+          href="https://www.instagram.com/collemavie/"
+          target="_blank"
+          rel="noreferrer"
+          style={{
+            textDecoration: "underline",
+            fontSize: "15px",
+            marginRight: 0,
+          }}
+        >
+          @collemavie
+        </a>
       </div>
     </div>
   );

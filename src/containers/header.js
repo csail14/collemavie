@@ -15,6 +15,7 @@ const MainContainer = styled.div`
   background-color:white
   max-width: ${isMobile ? "90vw" : ""};
   background-color: white;
+  box-shadow: 2px 3px 5px #a59d9d;
   z-index: 100;
 `;
 const TitleContainer = styled.div`
@@ -35,7 +36,7 @@ const LinkContainer = styled.div`
 const ContainerMobile = styled.div`
   display: flex;
   flex-direction: column;
-  background-color: grey;
+  color: black;
   width: 100vw;
 `;
 
@@ -120,7 +121,12 @@ class Header extends React.Component {
                   this.setState({ showMenu: !this.state.showMenu });
                 }}
               >
-                <div style={{ color: "white", lineHeight: "40px" }}>
+                <div
+                  style={{
+                    lineHeight: "60px",
+                    borderTop: "solid 0.5px #c0bfbf",
+                  }}
+                >
                   Bienvenue
                 </div>
               </Link>
@@ -131,7 +137,7 @@ class Header extends React.Component {
                   this.setState({ showMenu: !this.state.showMenu });
                 }}
               >
-                <div style={{ color: "white", lineHeight: "40px" }}>
+                <div style={{ lineHeight: "60px" }}>
                   Enchantée, moi c'est Clémence
                 </div>
               </Link>
@@ -142,9 +148,7 @@ class Header extends React.Component {
                   this.setState({ showMenu: !this.state.showMenu });
                 }}
               >
-                <div style={{ color: "white", lineHeight: "40px" }}>
-                  Mes oeuvres, ma vie
-                </div>
+                <div style={{ lineHeight: "60px" }}>Mes oeuvres, ma vie</div>
               </Link>
             </ContainerMobile>
           )}
